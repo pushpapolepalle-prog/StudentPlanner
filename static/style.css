@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fb;
+    color: #243047;
+}
+
+header {
+    background: #263d80;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h2 {
+    margin: 0 0 8px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 18px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card, .panel {
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #0000000d;
+}
+
+.card p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #3455bd;
+    margin-bottom: 0;
+}
+
+.task-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 10px;
+}
+
+input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #d3daea;
+    border-radius: 7px;
+}
+
+button {
+    border: none;
+    padding: 11px 15px;
+    border-radius: 7px;
+    background: #3455bd;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.filters, .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filters {
+    margin: 15px 0;
+}
+
+.filters .active {
+    background: #17295f;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e5eaf2;
+}
+
+.task h3 {
+    margin: 0 0 8px;
+}
+
+.task p {
+    color: #667085;
+}
+
+.done {
+    text-decoration: line-through;
+    color: #8490a3;
+}
+
+.delete {
+    background: #c43d4b;
+}
+
+.progress {
+    height: 12px;
+    background: #e2e8f3;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #20a36b;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #667085;
+}
+
+@media (max-width: 700px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .task-form {
+        grid-template-columns: 1fr;
+    }
+
+    .task {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Planner</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'script.js' %}" defer></script>
+</head>
+<body>
+
+<header>
+    <h2>📚 Student Planner</h2>
+    <p>Plan your studies. Achieve your goals.</p>
+</header>
+
+<main class="container">
+    <section class="stats">
+        <div class="card">
+            <h3>Total Tasks</h3>
+            <p>{{ total }}</p>
+        </div>
+        <div class="card">
+            <h3>Completed</h3>
+            <p>{{ completed }}</p>
+        </div>
+        <div class="card">
+            <h3>Pending</h3>
+            <p>{{ pending }}</p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Study Progress</h2>
+        <div class="progress">
+            <div class="progress-fill" style="width: {{ progress }}%"></div>
+        </div>
+        <p>{{ progress }}% completed</p>
+    </section>
+
+    <section class="panel">
+        <h2>Add New Task</h2>
+        <form method="post" class="task-form">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add">
+            <input type="text" name="title" placeholder="Task title" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+            <input type="date" name="due_date" required>
+            <button type="submit">Add Task</button>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>My Study Tasks</h2>
+
+        <div class="filters">
+            <button type="button" data-filter="all">All</button>
+            <button type="button" data-filter="pending">Pending</button>
+            <button type="button" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task" data-status="{% if task.completed %}completed{% else %}pending{% endif %}">
+                <div>
+                    <h3 class="{% if task.completed %}done{% endif %}">
+                        {{ task.title }}
+                    </h3>
+                    <p>{{ task.subject }} | Due: {{ task.due_date|date:"d M Y" }}</p>
+                    <span>
+                        {% if task.completed %}Completed{% else %}Pending{% endif %}
+                    </span>
+                </div>
+
+                <div class="actions">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <input type="hidden" name="action" value="complete">
+                        <button type="submit">
+                            {% if task.completed %}Undo{% else %}Complete{% endif %}
+                        </button>
+                    </form>
+
+                    <form method="post" onsubmit="return confirm('Delete this task?')">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p>No tasks yet. Add your first study task!</p>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Student Task & Study Planner | College Mini Project</p>
+</footer>
+
+</body>
+</html>
